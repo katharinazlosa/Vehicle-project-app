@@ -1,13 +1,21 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import VehicleMake from "../stores/VehicleMake";
+import vehicleModel from "../stores/VehicleModel";
 
 const Table = () => {
   return (
-    <Table
-      title="List of vehicles"
-      // data={(dataMake, dataModel)}
-      // columns={columns}
-    />
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Model</th>
+            <th>Abbreviation</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
   );
 };
 
