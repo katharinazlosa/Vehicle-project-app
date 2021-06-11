@@ -1,15 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-
-// import { Provider } from "mobx-react";
-
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+import { BrowserRouter as Router } from "react-router-dom";
+
+import { Provider } from "mobx-react";
 import RootStore from "./stores/RootStore";
-import VehicleMake from "./stores/VehicleMake";
-// import VehicleModel from "./stores/VehicleModel";
+import VehicleMake from "./stores/Vehicles";
+import VehicleModel from "./stores/Vehicles";
+
+const createStore = () => {
+  return new RootStore();
+};
+
+const rootStore = createStore();
 
 const makes = [
   { id: "1", name: "Audi", abbreviation: "Audi" },
@@ -36,15 +42,23 @@ const models = [
   { makeId: "4", modelName: "Impreza", modelAbb: "Impreza" },
 ];
 
+makes.forEach((element) => {
+  rootStore.vehicleMake.createMake(element.name, element.abbreviation);
+});
+
+models.forEach((element) => {
+  rootStore.vehicleModel.createModel(
+    element.makeId,
+    element.modelName,
+    element.modelAbb
+  );
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Provider
-      vehicleMake={stores.vehicleMake}
-      vehicleModel={stores.vehicleModel}
-    >
-      <Router routes={routes} history={browserHistory} /> */}
-    <App />
-    {/* </Provider> , document.getElementById("app")*/}
+    <Provider value={rootStore}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

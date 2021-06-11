@@ -1,6 +1,20 @@
 import { makeObservable, observable, action } from "mobx";
 
-class VehicleModel {
+export class VehicleMake {
+  id: Number;
+  name: string;
+  abbrevation: string;
+
+  constructor() {
+    makeObservable(this, {
+      id: observable,
+      name: observable,
+      abbrevation: observable,
+    });
+  }
+}
+
+export class VehicleModel {
   id: Number;
   makeId: string;
   modelName: string;
