@@ -1,8 +1,8 @@
 import { makeObservable, observable, action } from "mobx";
-import vehicleMake from "./Vehicles";
-import vehicleModel from "./Vehicles";
+import { vehicleMake } from "./Vehicles";
+import { vehicleModel } from "./Vehicles";
 
-export default class RootStore {
+export class RootStore {
   vehicleMake: VehicleMake;
   vehicleModel: VehicleModel;
 
@@ -12,7 +12,7 @@ export default class RootStore {
   }
 }
 
-class VehicleMake {
+export class VehicleMake {
   root: RootStore;
   vehicleMake: VehicleMake[] = [];
   constructor(root: RootStore) {
@@ -26,7 +26,7 @@ class VehicleMake {
   }
 }
 
-class VehicleModel {
+export class VehicleModel {
   root: RootStore;
   vehicleModel: VehicleModel[] = [];
   constructor(root: RootStore) {

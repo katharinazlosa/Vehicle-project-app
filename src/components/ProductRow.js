@@ -1,25 +1,19 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import {
-  BrowserRouter as Router,
-  Route,
-  NavLink,
-  Switch,
-  Redirect,
-} from "react-router-dom";
 
-import "./index.css";
-import { App } from "./App";
-import reportWebVitals from "./reportWebVitals";
+class ProductRow extends React.Component {
+  render() {
+    const vehicle = this.props.vehicle;
+    const name = vehicles.name;
 
-import { Provider } from "mobx-react";
-// import { RootStore, VehiclesRoot } from "./stores/RootStore";
-
-// const createStore = () => {
-//   return new RootStore();
-// };
-
-// const rootStore = createStore();
+    return (
+      <tr>
+        <td>{name}</td>
+        <td>{vehicle.modelName}</td>
+        <td>{vehicle.abbreviation}</td>
+      </tr>
+    );
+  }
+}
 
 const vehicles = [
   { id: "1", name: "Audi", abbreviation: "Audi", modelName: "A3" },
@@ -33,22 +27,4 @@ const vehicles = [
   { id: "9", name: "Volkswagen", abbreviation: "VW", modelName: "Sciroco" },
   { id: "10", name: "Alfa Romeo", abbreviation: "AR", modelName: "Giulia" },
 ];
-
-// vehicles.forEach((element) => {
-//   rootStore.vehicleMake.createMake(
-//     element.name,
-//     element.abbreviation,
-//     element.modelName
-//   );
-// });
-
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider>
-      <App />,
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
-);
-
-// value={rootStore}
+export default ProductRow();
