@@ -1,21 +1,4 @@
-import React from "react";
-
-class ProductRow extends React.Component {
-  render() {
-    const vehicle = this.props.vehicle;
-    const name = vehicles.name;
-
-    return (
-      <tr>
-        <td>{name}</td>
-        <td>{vehicle.modelName}</td>
-        <td>{vehicle.abbreviation}</td>
-      </tr>
-    );
-  }
-}
-
-const vehicles = [
+const data = [
   { id: "1", name: "Audi", abbreviation: "Audi", modelName: "A3" },
   { id: "2", name: "Opel", abbreviation: "Opel", modelName: "Astra" },
   { id: "3", name: "BMW", abbreviation: "BMW", modelName: "E36" },
@@ -27,4 +10,4 @@ const vehicles = [
   { id: "9", name: "Volkswagen", abbreviation: "VW", modelName: "Sciroco" },
   { id: "10", name: "Alfa Romeo", abbreviation: "AR", modelName: "Giulia" },
 ];
-export { ProductRow };
+export default data;

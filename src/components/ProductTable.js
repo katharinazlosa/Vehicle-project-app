@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import ProductCategoryRow from "./ProductCategoryRow";
-import ProductRow from "./ProductRow";
+import { ProductCategoryRow } from "./ProductCategoryRow";
+import { ProductRow } from "./ProductRow";
 
 class ProductTable extends React.Component {
   render() {
@@ -12,21 +12,21 @@ class ProductTable extends React.Component {
     const rows = [];
     let lastModel = null;
 
-    this.props.vehicles.forEach((vehicle) => {
-      if (vehicle.name.indexOf(filterText) === -1) {
-        return;
-      }
+    // this.props.vehicles.forEach((vehicle) => {
+    //   if (vehicle.name.indexOf(filterText) === -1) {
+    //     return;
+    //   }
 
-      //add sort and pagination
-    });
+    //add sort and pagination
+    // });
 
     return (
       <table>
         <thead>
           <tr>
-            <th>Name</th>
+            {/* <th>Name</th>
             <th>Model</th>
-            <th>Abbreviation</th>
+            <th>Abbreviation</th> */}
           </tr>
         </thead>
         <tbody>{rows}</tbody>
@@ -37,4 +37,4 @@ class ProductTable extends React.Component {
 
 //reactdom!
 
-export default ProductTable();
+export { ProductTable };

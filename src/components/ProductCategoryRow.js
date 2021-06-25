@@ -10,5 +10,4 @@ class ProductCategoryRow extends React.Component {
     );
   }
 }
-
-export default ProductCategoryRow();
+export { ProductCategoryRow };
