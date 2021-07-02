@@ -1,86 +1,49 @@
-import React from "react";
+import React, { useContext } from "react";
 import ReactDOM from "react-dom";
 
 import { SearchBar } from "./components/SearchBar";
 // import { Pagination } from "./components/Pagination";
 import { ProductTable } from "./components/ProductTable";
 
-export class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       filterText: "",
-      sortName: "asc",
-      pageChange: "",
-      pageData: "",
       currentPage: 1,
       carsPerPage: 3,
     };
 
-    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
-    this.handleSortNameChange = this.handleSortNameChange.bind(this);
+    this.filterTextChange = this.filterTextChange.bind(this);
+    this.currentPage = this.currentPageChange.bind(this);
+    this.carsPerPage = this.carsPerPageChange.bind(this);
   }
-  handleFilterTextChange(filterText) {
+  filterTextChange(filterText) {
     this.setState({
       filterText: filterText,
     });
   }
 
-  handleSortNameChange(sortName) {
-    this.setState({
-      sortName: sortName,
-    });
+  filterText(e) {
+    this.props.filterTextChange(e.target.value);
   }
-  handlePageChange(pageChange) {
-    this.setState({
-      pageChange: pageChange,
-    });
+  filteredVehicles(e) {
+    this.props.filteredVehiclesChange(e.target.value);
   }
-  handlePageData(pageData) {
-    this.setState({
-      pageData: pageData,
-    });
+  sortedVehicles(e) {
+    this.props.sortedVehiclesChange(e.target.value);
   }
-  handleCurrentPage(currentPage) {
-    this.setState({
-      currentPage: currentPage,
-    });
-  }
-  handleCarsPerPage(carsPerPage) {
-    this.setState({
-      carsPerPage: carsPerPage,
-    });
-  }
-
   render() {
     return (
       <div>
-        <SearchBar
-          filterText={this.state.filterText}
-          onFilterTextChange={this.handleFilterTextChange}
-          sortName={this.state.sortName}
-          onSortNameChange={this.handleSortNameChange}
-        />
-        <ProductTable
-          // vehicles={this.prop.vehicles}
-          filterText={this.state.filterText}
-          sortName={this.state.sortName}
-          pageChange={this.state.pageChange}
-          onPageChange={this.handlePageChange}
-          pageChange={this.state.pageChange}
-        />
+        <SearchBar filterText={this.props.filterText} />
+        <ProductTable />
         {/* <Pagination
-          pageChange={this.state.pageChange}
-          onPageChange={this.handlePageChange}
-          pageData={this.state.pageData}
-          currentPage={this.state.currentPage}
-          carsPerPage={this.state.carsPerPage}
+          
         /> */}
       </div>
     );
   }
 }
 
-export { SearchBar, ProductTable };
-
-//, Pagination
+export { App };

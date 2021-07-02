@@ -12,11 +12,6 @@ class ProductTable extends React.Component {
     const rows = [];
     let lastModel = null;
 
-    // this.props.vehicles.forEach((vehicle) => {
-    //   if (vehicle.name.indexOf(filterText) === -1) {
-    //     return;
-    //   }
-
     //add sort and pagination
     // });
 
