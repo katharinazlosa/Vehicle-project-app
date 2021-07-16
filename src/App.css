@@ -1,0 +1,24 @@
+.App {
+  text-align: center;
+}
+
+.navigation {
+  background-color: black;
+  padding: 15px 0;
+}
+
+a,
+a:active,
+a:focus {
+  text-decoration: none;
+}
+
+.navigationLink {
+  color: #fefefe;
+  padding: 15px;
+}
+
+.active {
+  background-color: #fefefe;
+  color: black;
+}

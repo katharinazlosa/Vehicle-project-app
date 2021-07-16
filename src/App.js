@@ -1,49 +1,43 @@
 import React, { useContext } from "react";
 import ReactDOM from "react-dom";
+import "./App.css";
+import {
+  BrowserRouter as Router,
+  Route,
+  NavLink,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import VehicleMakeList from "./components/VehicleMakeList";
+import VehicleModelList from "./components/VehicleModelList";
 
-import { SearchBar } from "./components/SearchBar";
-// import { Pagination } from "./components/Pagination";
-import { ProductTable } from "./components/ProductTable";
+const App = () => {
+  return (
+    <div className="App">
+      <Router>
+        <nav className="navigation">
+          <NavLink className="navigationLink" to="/makes">
+            Makes
+          </NavLink>
+          <NavLink className="navigationLink" to="/models">
+            Models
+          </NavLink>
+        </nav>
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      filterText: "",
-      currentPage: 1,
-      carsPerPage: 3,
-    };
-
-    this.filterTextChange = this.filterTextChange.bind(this);
-    this.currentPage = this.currentPageChange.bind(this);
-    this.carsPerPage = this.carsPerPageChange.bind(this);
-  }
-  filterTextChange(filterText) {
-    this.setState({
-      filterText: filterText,
-    });
-  }
-
-  filterText(e) {
-    this.props.filterTextChange(e.target.value);
-  }
-  filteredVehicles(e) {
-    this.props.filteredVehiclesChange(e.target.value);
-  }
-  sortedVehicles(e) {
-    this.props.sortedVehiclesChange(e.target.value);
-  }
-  render() {
-    return (
-      <div>
-        <SearchBar filterText={this.props.filterText} />
-        <ProductTable />
-        {/* <Pagination
-          
-        /> */}
-      </div>
-    );
-  }
-}
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/makes" />
+          </Route>
+          <Route path="/makes">
+            <VehicleMakeList />
+          </Route>
+          <Route path="/models">
+            <VehicleModelList />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
+  );
+};
 
 export { App };
