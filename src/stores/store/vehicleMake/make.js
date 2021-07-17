@@ -7,7 +7,7 @@ export default class Make {
   name: string;
   abbreviation: string;
 
-  constructor(name, abbreviation) {
+  constructor(name: string, abbreviation: string) {
     makeObservable(this, {
       name: observable,
       abbreviation: observable,

@@ -13,7 +13,7 @@ const VehicleMake: FunctionComponent<Props> = ({ make }) => {
   }, [make.name]);
 
   useEffect(() => {
-    setEditAbreviation(make.abbreviation);
+    setEditAbbreviation(make.abbreviation);
   }, [make.abbreviation]);
 
   const [editMake, setEditMake] = useState("");

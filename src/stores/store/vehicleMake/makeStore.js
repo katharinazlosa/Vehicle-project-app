@@ -6,7 +6,7 @@ export default class MakeStore {
   makeList: Make[] = [];
   rootStore: RootStore;
 
-  constructor(rootStore: RootStore) {
+  constructor(makeList, rootStore: RootStore) {
     makeObservable(this, {
       makeList: observable,
       rootStore: observable,

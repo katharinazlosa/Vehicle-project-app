@@ -4,10 +4,10 @@ import VehicleModelStore from "./vehicleModel/modelStore";
 
 export default class DataStore {
   makeStore: MakeStore;
-  modelStore: VehicleModelStore;
+  modelStore: ModelStore;
 
   constructor(rootStore: RootStore) {
     this.makeStore = new MakeStore(rootStore);
-    this.modelStore = new VehicleModelStore(rootStore);
+    this.modelStore = new ModelStore(rootStore);
   }
 }

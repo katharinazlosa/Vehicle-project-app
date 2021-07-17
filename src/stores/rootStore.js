@@ -1,9 +1,9 @@
 import DataStore from "./store/dataStore";
 
 export default class RootStore {
-  dataStores: DataStore;
+  dataStore: DataStore;
 
-  constructor() {
-    this.dataStores = new DataStore(this);
+  constructor(dataStore: DataStore) {
+    this.dataStore = new DataStore(this);
   }
 }

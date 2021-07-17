@@ -6,7 +6,7 @@ interface Props {
   model: VehicleModel;
 }
 
-const VehicleModel: FunctionComponent<Props> = ({ model }) => {
+const VehicleModelComp: FunctionComponent<Props> = ({ model }) => {
   useEffect(() => {
     setMakeId(model.makeId);
   }, [model.makeId]);
@@ -81,4 +81,4 @@ const VehicleModel: FunctionComponent<Props> = ({ model }) => {
   );
 };
 
-export { VehicleModel };
+export default VehicleModelComp;

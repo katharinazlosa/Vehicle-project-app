@@ -8,7 +8,7 @@ export default class VehicleModel {
   modelName: string;
   modelAbbrv: string;
 
-  constructor(makeId, modelName, modelAbbrv) {
+  constructor(makeId: string, modelName: string, modelAbbrv: string) {
     makeObservable(this, {
       editModelFields: action,
     });

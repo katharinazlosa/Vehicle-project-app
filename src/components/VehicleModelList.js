@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useObserver } from "mobx-react";
 import { useStores } from "../stores/helpers/useStore";
-import VehicleModel from "../stores/store/vehicleModel/model";
-import VehicleModel from "./VehicleModel";
+import VehicleModelStore from "../stores/store/vehicleModel/model";
+import VehicleModelComp from "./VehicleModelComp";
+import classes from "./VehicleModelListClasses.css";
 
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -174,7 +175,7 @@ const VehicleModelList = () => {
               <TableBody>
                 {makesAfterPagingAndSorting().map(
                   (vehicleModel: VehicleModel) => (
-                    <CarModelComponent
+                    <VehicleModelComp
                       model={vehicleModel}
                       key={vehicleModel.id}
                     />
