@@ -6,14 +6,13 @@ export default class MakeStore {
   makeList: Make[] = [];
   rootStore: RootStore;
 
-  constructor(makeList, rootStore: RootStore) {
+  constructor(makeList: Make, rootStore: RootStore) {
     makeObservable(this, {
       makeList: observable,
       rootStore: observable,
       allMakes: computed,
       createMake: action,
     });
-    this.rootStore = rootStore;
   }
 
   get allMakes() {

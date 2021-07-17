@@ -13,8 +13,7 @@ export default class VehicleModelStore {
       createModel: action,
     });
   }
-  this.rootStore = RootStore;
-  
+
   get allMakes() {
     return this.vehicleModels.slice();
   }
