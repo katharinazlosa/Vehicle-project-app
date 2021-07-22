@@ -8,14 +8,14 @@ export default class Make {
   abbreviation: string;
 
   constructor(name: string, abbreviation: string) {
+    this.id = continuousId++;
+    this.name = name;
+    this.abbreviation = abbreviation;
     makeObservable(this, {
       name: observable,
       abbreviation: observable,
       editFields: action,
     });
-    this.id = continuousId++;
-    this.name = name;
-    this.abbreviation = abbreviation;
   }
 
   editFields(name: string, abbreviation: string) {

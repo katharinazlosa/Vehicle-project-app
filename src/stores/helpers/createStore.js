@@ -1,5 +1,5 @@
-import RootStore from "../rootStore";
+import DataStore from "../store/dataStore";
 
 export const createStore = () => {
-  return new RootStore();
+  return new DataStore();
 };

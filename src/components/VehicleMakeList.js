@@ -106,9 +106,11 @@ function VehicleMakeList() {
     });
   };
 
+  const dataStore = useStores();
+
   const makesAfterPagingAndSorting = () => {
     return stableSort(
-      filterFn.fn(makeStore.allMakes),
+      filterFn.fn(dataStore.makeStore.allMakes),
       getComparator(order, orderBy)
     ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
   };
@@ -118,10 +120,6 @@ function VehicleMakeList() {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(cellId);
   };
-
-  const {
-    dataStores: { makeStore },
-  } = useStores();
 
   const classesMUI = useStyles();
 
@@ -183,7 +181,7 @@ function VehicleMakeList() {
             page={page}
             component="div"
             rowsPerPage={rowsPerPage}
-            count={makeStore.allMakes.length}
+            count={dataStore.makeStore.allMakes.length}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />

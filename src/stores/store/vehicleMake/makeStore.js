@@ -1,15 +1,14 @@
-import { action, computed, makeObservable, observable } from "mobx";
-import RootStore from "../../rootStore";
+import { action, computed, makeAutoObservable, makeObservable, observable } from "mobx";
+import DataStore from "../dataStore";
 import Make from "./make";
 
 export default class MakeStore {
   makeList: Make[] = [];
-  rootStore: RootStore;
+  dataStore: DataStore;
 
-  constructor(makeList: Make, rootStore: RootStore) {
+  constructor(dataStore: DataStore) {
     makeObservable(this, {
       makeList: observable,
-      rootStore: observable,
       allMakes: computed,
       createMake: action,
     });

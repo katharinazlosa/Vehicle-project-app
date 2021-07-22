@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import RootStore from "../rootStore";
+import DataStore from "../store/dataStore";
 import { StoreContext } from "./storeContext";
 
 export const useStores = () => {
-  return useContext < RootStore > StoreContext;
+  return useContext(StoreContext);
 };

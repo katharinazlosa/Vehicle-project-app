@@ -1,12 +1,12 @@
 import { action, computed, makeObservable, observable } from "mobx";
-import RootStore from "../../rootStore";
+import DataStore from "../dataStore";
 import VehicleModel from "./model";
 
 export default class VehicleModelStore {
   vehicleModels: VehicleModel[] = [];
-  rootStore: RootStore;
+  dataStore: DataStore;
 
-  constructor(rootStore: RootStore) {
+  constructor(dataStore: DataStore) {
     makeObservable(this, {
       vehicleModels: observable,
       allMakes: computed,

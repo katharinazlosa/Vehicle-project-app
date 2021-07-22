@@ -8,42 +8,39 @@ import reportWebVitals from "./reportWebVitals";
 import { createStore } from "./stores/helpers/createStore";
 import { StoreProvider } from "./stores/helpers/storeContext";
 
-const rootStore = createStore();
+const dataStore = createStore();
 
 const makes = [
-  { name: "Volkswagen", abreviation: "VW" },
-  { name: "Aston Martin", abreviation: "AM" },
-  { name: "Alfa Romeo", abreviation: "AR" },
-  { name: "Audi", abreviation: "Audi" },
-  { name: "Bentley", abreviation: "Bentley" },
-  { name: "BMW", abreviation: "BMW" },
-  { name: "Dodge", abreviation: "Dodge" },
-  { name: "DS", abreviation: "DS" },
-  { name: "Ferrari", abreviation: "Ferrari" },
-  { name: "Fiat", abreviation: "Fiat" },
-  { name: "Ford", abreviation: "Ford" },
-  { name: "Land Rover", abreviation: "LR" },
-  { name: "Mercedes-Benz", abreviation: "MB" },
+  { name: "Opel", abbreviation: "Opel" },
+  { name: "Audi", abbreviation: "Audi" },
+  { name: "BMW", abbreviation: "BMW" },
+  { name: "Mercedes-Benz", abbreviation: "MB" },
+  { name: "Subaru", abbreviation: "Subaru" },
+  { name: "VW", abbreviation: "VW" },
+  { name: "Peugeot", abbreviation: "Peugeot" },
+  { name: "Renault", abbreviation: "Renault" },
+  { name: "Škoda", abbreviation: "Škoda" },
+  { name: "Bugatti", abbreviation: "Bugatti" },
 ];
 
 const models = [
-  { makeId: "1", modelName: "Passat", modelAbrv: "Passat" },
-  { makeId: "1", modelName: "Golf", modelAbrv: "Golf" },
-  { makeId: "1", modelName: "Polo", modelAbrv: "Polo" },
-  { makeId: "1", modelName: "Sciroco", modelAbrv: "Sciroco" },
-  { makeId: "1", modelName: "Arteon", modelAbrv: "Arteon" },
-  { makeId: "2", modelName: "A4", modelAbrv: "A4" },
-  { makeId: "3", modelName: "Continental", modelAbrv: "Continental" },
-  { makeId: "4", modelName: "458 Italia", modelAbrv: "458" },
-  { makeId: "4", modelName: "599 Fiorano", modelAbrv: "599" },
+  { makeId: "0", modelName: "Astra", modelAbbrv: "Astra" },
+  { makeId: "0", modelName: "Corsa", modelAbbrv: "Corsa" },
+  { makeId: "1", modelName: "A5", modelAbbrv: "A5" },
+  { makeId: "2", modelName: "M3", modelAbbrv: "M3" },
+  { makeId: "2", modelName: "A4", modelAbbrv: "A4" },
+  { makeId: "5", modelName: "Golf", modelAbbrv: "Golf" },
+  { makeId: "5", modelName: "Polo", modelAbbrv: "Polo" },
+  { makeId: "5", modelName: "Scirocco", modelAbbrv: "Scirocco" },
+  { makeId: "5", modelName: "Arteon", modelAbbrv: "Arteon" },
 ];
 
 makes.forEach((element) => {
-  rootStore.dataStores.makeStore.createMake(element.name, element.abbreviation);
+  dataStore.makeStore.createMake(element.name, element.abbreviation);
 });
 
 models.forEach((element) => {
-  rootStore.dataStores.modelStore.createModel(
+  dataStore.modelStore.createModel(
     element.makeId,
     element.modelName,
     element.modelAbbrv
@@ -53,8 +50,8 @@ models.forEach((element) => {
 export const StoreContext = React.createContext();
 
 ReactDOM.render(
-  <StoreContext.Provider value={rootStore}>
+  <StoreProvider value={dataStore}>
     <App />
-  </StoreContext.Provider>,
+  </StoreProvider>,
   document.getElementById("root")
 );

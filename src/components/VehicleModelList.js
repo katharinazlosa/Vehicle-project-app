@@ -109,7 +109,7 @@ const VehicleModelList = () => {
 
   const makesAfterPagingAndSorting = () => {
     return stableSort(
-      filterFn.fn(modelStore.vehicleModels),
+      filterFn.fn(dataStore.modelStore.vehicleModels),
       getComparator(order, orderBy)
     ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
   };
@@ -120,9 +120,7 @@ const VehicleModelList = () => {
     setOrderBy(cellId);
   };
 
-  const {
-    dataStores: { modelStore },
-  } = useStores();
+  const dataStore = useStores();
 
   const classesMUI = useStyles();
 
@@ -189,7 +187,7 @@ const VehicleModelList = () => {
             page={page}
             component="div"
             rowsPerPage={rowsPerPage}
-            count={modelStore.vehicleModels.length}
+            count={dataStore.modelStore.vehicleModels.length}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />

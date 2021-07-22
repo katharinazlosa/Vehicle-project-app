@@ -1,0 +1,283 @@
+diff --git a/.vscode/launch.json b/.vscode/launch.json
+index c9300de..43e9aa9 100644
+--- a/.vscode/launch.json
++++ b/.vscode/launch.json
+@@ -8,14 +8,14 @@
+       "name": "Launch Chrome",
+       "request": "launch",
+       "type": "pwa-chrome",
+-      "url": "http://localhost:8080",
++      "url": "http://localhost:3000",
+       "webRoot": "${workspaceFolder}"
+     },
+     {
+       "type": "pwa-chrome",
+       "request": "launch",
+       "name": "Launch Chrome against localhost",
+-      "url": "http://localhost:8080",
++      "url": "http://localhost:3000",
+       "webRoot": "${workspaceFolder}"
+     }
+   ]
+diff --git a/.vscode/settings.json b/.vscode/settings.json
+index 4a069ff..a1a6c74 100644
+--- a/.vscode/settings.json
++++ b/.vscode/settings.json
+@@ -1,6 +1,4 @@
+ {
+-    "compile-hero.disable-compile-files-on-did-save-code": true
+-}
+-{
++    "compile-hero.disable-compile-files-on-did-save-code": true,
+     "javascript.validate.enable": false
+ }
+\ No newline at end of file
+diff --git a/src/components/VehicleMakeList.js b/src/components/VehicleMakeList.js
+index c36fddc..d263f9a 100644
+--- a/src/components/VehicleMakeList.js
++++ b/src/components/VehicleMakeList.js
+@@ -106,9 +106,11 @@ function VehicleMakeList() {
+     });
+   };
+ 
++  const dataStore = useStores();
++
+   const makesAfterPagingAndSorting = () => {
+     return stableSort(
+-      filterFn.fn(makeStore.allMakes),
++      filterFn.fn(dataStore.makeStore.allMakes),
+       getComparator(order, orderBy)
+     ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+   };
+@@ -119,9 +121,7 @@ function VehicleMakeList() {
+     setOrderBy(cellId);
+   };
+ 
+-  const {
+-    dataStores: { makeStore },
+-  } = useStores();
++
+ 
+   const classesMUI = useStyles();
+ 
+@@ -183,7 +183,7 @@ function VehicleMakeList() {
+             page={page}
+             component="div"
+             rowsPerPage={rowsPerPage}
+-            count={makeStore.allMakes.length}
++            count={dataStore.makeStore.allMakes.length}
+             onChangePage={handleChangePage}
+             onChangeRowsPerPage={handleChangeRowsPerPage}
+           />
+diff --git a/src/components/VehicleModelList.js b/src/components/VehicleModelList.js
+index f3df942..b4a48a0 100644
+--- a/src/components/VehicleModelList.js
++++ b/src/components/VehicleModelList.js
+@@ -109,7 +109,7 @@ const VehicleModelList = () => {
+ 
+   const makesAfterPagingAndSorting = () => {
+     return stableSort(
+-      filterFn.fn(modelStore.vehicleModels),
++      filterFn.fn(dataStore.modelStore.vehicleModels),
+       getComparator(order, orderBy)
+     ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+   };
+@@ -120,9 +120,7 @@ const VehicleModelList = () => {
+     setOrderBy(cellId);
+   };
+ 
+-  const {
+-    dataStores: { modelStore },
+-  } = useStores();
++  const dataStore = useStores();
+ 
+   const classesMUI = useStyles();
+ 
+@@ -189,7 +187,7 @@ const VehicleModelList = () => {
+             page={page}
+             component="div"
+             rowsPerPage={rowsPerPage}
+-            count={modelStore.vehicleModels.length}
++            count={dataStore.modelStore.vehicleModels.length}
+             onChangePage={handleChangePage}
+             onChangeRowsPerPage={handleChangeRowsPerPage}
+           />
+diff --git a/src/index.js b/src/index.js
+index 05e53aa..5f585fb 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -8,7 +8,7 @@ import reportWebVitals from "./reportWebVitals";
+ import { createStore } from "./stores/helpers/createStore";
+ import { StoreProvider } from "./stores/helpers/storeContext";
+ 
+-const rootStore = createStore();
++const dataStore = createStore();
+ 
+ const makes = [
+   { name: "Volkswagen", abreviation: "VW" },
+@@ -39,11 +39,11 @@ const models = [
+ ];
+ 
+ makes.forEach((element) => {
+-  rootStore.dataStores.makeStore.createMake(element.name, element.abbreviation);
++  dataStore.makeStore.createMake(element.name, element.abbreviation);
+ });
+ 
+ models.forEach((element) => {
+-  rootStore.dataStores.modelStore.createModel(
++  dataStore.modelStore.createModel(
+     element.makeId,
+     element.modelName,
+     element.modelAbbrv
+@@ -53,8 +53,8 @@ models.forEach((element) => {
+ export const StoreContext = React.createContext();
+ 
+ ReactDOM.render(
+-  <StoreContext.Provider value={rootStore}>
++  <StoreProvider value={dataStore}>
+     <App />
+-  </StoreContext.Provider>,
++  </StoreProvider>,
+   document.getElementById("root")
+ );
+diff --git a/src/stores/helpers/createStore.js b/src/stores/helpers/createStore.js
+index 61ceda7..a0e0272 100644
+--- a/src/stores/helpers/createStore.js
++++ b/src/stores/helpers/createStore.js
+@@ -1,5 +1,5 @@
+-import RootStore from "../rootStore";
++import DataStore from "../store/dataStore";
+ 
+ export const createStore = () => {
+-  return new RootStore();
++  return new DataStore();
+ };
+diff --git a/src/stores/helpers/storeContext.js b/src/stores/helpers/storeContext.js
+index e2b5945..4f40bd4 100644
+--- a/src/stores/helpers/storeContext.js
++++ b/src/stores/helpers/storeContext.js
+@@ -1,5 +1,5 @@
+ import { createContext } from "react";
+-import RootStore from "../rootStore";
++import DataStore from "../store/dataStore";
+ 
+-export const StoreContext = createContext(RootStore);
++export const StoreContext = createContext(DataStore);
+ export const StoreProvider = StoreContext.Provider;
+diff --git a/src/stores/helpers/useStore.js b/src/stores/helpers/useStore.js
+index 1640f10..4d54c91 100644
+--- a/src/stores/helpers/useStore.js
++++ b/src/stores/helpers/useStore.js
+@@ -1,7 +1,7 @@
+ import { useContext } from "react";
+-import RootStore from "../rootStore";
++import DataStore from "../store/dataStore";
+ import { StoreContext } from "./storeContext";
+ 
+ export const useStores = () => {
+-  return useContext < RootStore > StoreContext;
++  return useContext(StoreContext);
+ };
+diff --git a/src/stores/rootStore.js b/src/stores/rootStore.js
+deleted file mode 100644
+index 6e86e75..0000000
+--- a/src/stores/rootStore.js
++++ /dev/null
+@@ -1,9 +0,0 @@
+-import DataStore from "./store/dataStore";
+-
+-export default class RootStore {
+-  dataStore: DataStore;
+-
+-  constructor(dataStore: DataStore) {
+-    this.dataStore = new DataStore(this);
+-  }
+-}
+diff --git a/src/stores/store/dataStore.js b/src/stores/store/dataStore.js
+index 5e2d67e..693d028 100644
+--- a/src/stores/store/dataStore.js
++++ b/src/stores/store/dataStore.js
+@@ -1,13 +1,12 @@
+-import RootStore from "../rootStore";
+ import MakeStore from "./vehicleMake/makeStore";
+ import VehicleModelStore from "./vehicleModel/modelStore";
+ 
+ export default class DataStore {
+   makeStore: MakeStore;
+-  modelStore: ModelStore;
++  modelStore: VehicleModelStore;
+ 
+-  constructor(rootStore: RootStore) {
+-    this.makeStore = new MakeStore(rootStore);
+-    this.modelStore = new ModelStore(rootStore);
++  constructor() {
++    this.makeStore = new MakeStore(this);
++    this.modelStore = new VehicleModelStore(this);
+   }
+ }
+diff --git a/src/stores/store/vehicleMake/make.js b/src/stores/store/vehicleMake/make.js
+index 697f2cf..d806a05 100644
+--- a/src/stores/store/vehicleMake/make.js
++++ b/src/stores/store/vehicleMake/make.js
+@@ -8,14 +8,14 @@ export default class Make {
+   abbreviation: string;
+ 
+   constructor(name: string, abbreviation: string) {
++    this.id = continuousId++;
++    this.name = name;
++    this.abbreviation = abbreviation;
+     makeObservable(this, {
+       name: observable,
+       abbreviation: observable,
+       editFields: action,
+     });
+-    this.id = continuousId++;
+-    this.name = name;
+-    this.abbreviation = abbreviation;
+   }
+ 
+   editFields(name: string, abbreviation: string) {
+diff --git a/src/stores/store/vehicleMake/makeStore.js b/src/stores/store/vehicleMake/makeStore.js
+index a79c23d..46065a6 100644
+--- a/src/stores/store/vehicleMake/makeStore.js
++++ b/src/stores/store/vehicleMake/makeStore.js
+@@ -1,15 +1,14 @@
+-import { action, computed, makeObservable, observable } from "mobx";
+-import RootStore from "../../rootStore";
++import { action, computed, makeAutoObservable, makeObservable, observable } from "mobx";
++import DataStore from "../dataStore";
+ import Make from "./make";
+ 
+ export default class MakeStore {
+   makeList: Make[] = [];
+-  rootStore: RootStore;
++  dataStore: DataStore;
+ 
+-  constructor(makeList: Make, rootStore: RootStore) {
++  constructor(dataStore: DataStore) {
+     makeObservable(this, {
+       makeList: observable,
+-      rootStore: observable,
+       allMakes: computed,
+       createMake: action,
+     });
+diff --git a/src/stores/store/vehicleModel/modelStore.js b/src/stores/store/vehicleModel/modelStore.js
+index 21fc596..2b38a8f 100644
+--- a/src/stores/store/vehicleModel/modelStore.js
++++ b/src/stores/store/vehicleModel/modelStore.js
+@@ -1,12 +1,12 @@
+ import { action, computed, makeObservable, observable } from "mobx";
+-import RootStore from "../../rootStore";
++import DataStore from "../dataStore";
+ import VehicleModel from "./model";
+ 
+ export default class VehicleModelStore {
+   vehicleModels: VehicleModel[] = [];
+-  rootStore: RootStore;
++  dataStore: DataStore;
+ 
+-  constructor(rootStore: RootStore) {
++  constructor(dataStore: DataStore) {
+     makeObservable(this, {
+       vehicleModels: observable,
+       allMakes: computed,
