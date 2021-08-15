@@ -1,39 +1,45 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import Make from "../stores/store/vehicleMake/make";
-import VehicleMakeUI from ./
+import React, { FunctionComponent } from "react";
+
+import VehicleMakeUI from "../logic/VehicleMakeUI";
 import "./VehicleMake.css";
 import { TableRow, TableCell, Button } from "@material-ui/core";
 
-interface Props {
-  make: Make;
-}
+import classes from "./VehicleMake.css";
+
+import { makeStyles } from "@material-ui/core/styles";
 
 class VehicleMake extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <React.Fragment>
-        {editMode ? (
+        {this.props.editMode ? (
           <TableRow>
-            <TableCell>{make.id}</TableCell>
+            <TableCell>{this.props.make.id}</TableCell>
             <TableCell align="right">
               <input
                 type="text"
-                value={editMake}
-                onChange={(e) => setEditMake(e.target.value)}
+                value={this.props.editMake}
+                onChange={(e) => this.props.setEditMake(e.target.value)}
               />
             </TableCell>
             <TableCell align="right">
               <input
                 type="text"
-                value={editAbbreviation}
-                onChange={(e) => setEditAbbreviation(e.target.value)}
+                value={this.props.editAbbreviation}
+                onChange={(e) => this.props.setEditAbbreviation(e.target.value)}
               />
             </TableCell>
             <TableCell align="right">
               <Button
                 onClick={() => {
-                  setEditMode(false);
-                  make.editFields(editMake, editAbbreviation);
+                  this.props.setEditMode(false);
+                  this.props.make.editFields(
+                    this.props.editMake,
+                    this.props.editAbbreviation
+                  );
                 }}
                 variant="outlined"
               >
@@ -43,14 +49,14 @@ class VehicleMake extends React.Component {
           </TableRow>
         ) : (
           <TableRow>
-            <TableCell>{make.id}</TableCell>
-            <TableCell align="right">{make.name}</TableCell>
-            <TableCell align="right">{make.abbreviation}</TableCell>
+            <TableCell>{this.props.make.id}</TableCell>
+            <TableCell align="right">{this.props.make.name}</TableCell>
+            <TableCell align="right">{this.props.make.abbreviation}</TableCell>
             <TableCell align="right">
               <i
                 className="fa fa-pencil-square-o addHoverHand"
                 aria-hidden="true"
-                onClick={() => setEditMode(true)}
+                onClick={() => this.props.setEditMode(true)}
               ></i>
             </TableCell>
           </TableRow>

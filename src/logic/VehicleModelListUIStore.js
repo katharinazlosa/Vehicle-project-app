@@ -2,37 +2,40 @@ import MakeStore from "../stores/store/vehicleMake/makeStore";
 import DataStore from "../stores/store/dataStore";
 import VehicleModel from "../stores/store/vehicleModel/model";
 import React from "react";
+import { makeObservable, observable, action, computed } from "mobx";
 
-class VehicleModelListUIStore extends React.Component {
+class VehicleModelListUIStore {
+  page: 0;
+  pages: [5, 10, 25];
+  rowsPerPage: pages[page];
+  order: "";
+  orderBy: "";
+  filterFn: fn = (items: VehicleModel[]) => {
+    return items;
+  };
   constructor(props) {
-    super(props);
-    this.state = {
-      page: 0,
-      pages: [5, 10, 25],
-      rowsPerPage: this.pages[this.page],
-      order: "",
-      orderBy: "",
-      filterFn: {
-        fn: (items: VehicleModel[]) => {
-          return items;
-        },
-      },
-    };
-    this.handleChangePage = this.handleChangePage.bind(this);
-    this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
-    this.stableSort = this.stableSort.bind(this);
-    this.getComparator = this.getComparator.bind(this);
-    this.descendingComparator = this.descendingComparator.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.makesAfterPagingAndSorting =
-      this.makesAfterPagingAndSorting.bind(this);
-    this.handleSortRequest = this.handleSortRequest.bind(this);
+    makeObservable(this, {
+      page: observable,
+      pages: observable,
+      rowsPerPage: observable,
+      order: observable,
+      orderBy: observable,
+      filterFn: observable,
+      handleChangePage: action,
+      handleChangeRowsPerPage: action,
+      stableSort: action,
+      getComparator: action,
+      descendingComparator: action,
+      handleSearch: action,
+      makesAfterPagingAndSorting: action,
+      handleSortRequest: action,
+    });
   }
   handleChangePage(event: unknown, newPage: number) {
-    this.setPage(newPage);
+    this.page = newPage;
   }
-  handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setRowsPerPage(parseInt(event.target.value, 10));
+  handleChangeRowsPerPage(event) {
+    this.rowsPerPage = parseInt(event.target.value, 10);
     this.setPage(0);
   }
   stableSort(array: any, comparator: any) {
@@ -60,7 +63,7 @@ class VehicleModelListUIStore extends React.Component {
   }
   handleSearch(e: { target: any }) {
     let target = e.target;
-    setFilterFn({
+    this.setFilterFn({
       fn: (items: VehicleModel[]) => {
         if (target.value === "") return items;
         else
@@ -71,14 +74,14 @@ class VehicleModelListUIStore extends React.Component {
     });
   }
   makesAfterPagingAndSorting() {
-    return stableSort(
-      filterFn.fn(dataStore.modelStore.vehicleModels),
-      getComparator(order, orderBy)
-    ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+    return this.stableSort(
+      this.filterFn.fn(this.props.dataStore.modelStore.vehicleModels),
+      this.getComparator(this.props.order, this.props.orderBy)
+    ).slice(page * this.props.rowsPerPage, (page + 1) * this.props.rowsPerPage);
   }
   handleSortRequest(cellId: string) {
-    const isAsc = orderBy === cellId && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(cellId);
+    const isAsc = this.props.orderBy === cellId && this.props.order === "asc";
+    this.props.setOrder(isAsc ? "desc" : "asc");
+    this.props.setOrderBy(cellId);
   }
 }

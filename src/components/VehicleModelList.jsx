@@ -3,8 +3,8 @@ import { useObserver } from "mobx-react";
 import { useStores } from "../stores/helpers/useStore";
 import VehicleModelStore from "../stores/store/vehicleModel/model";
 import VehicleModelComp from "./VehicleModelComp";
-import classes from "./
-import VehicleModelListUIStore from "../logic/VehicleModelListUIStore"
+import classes from "./VehicleModelListClasses.css";
+import VehicleModelListUIStore from "../logic/VehicleModelListUIStore";
 
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -45,7 +45,7 @@ makeStyles({
     fontWeight: "bold",
   },
 });
-const dataStore = useStores();
+// const dataStore = useStores();
 const classesMUI = makeStyles();
 
 class VehicleModelList extends React.Component {
@@ -122,7 +122,7 @@ class VehicleModelList extends React.Component {
             page={this.props.page}
             component="div"
             rowsPerPage={this.props.rowsPerPage}
-            count={dataStore.modelStore.vehicleModels.length}
+            count={this.props.dataStore.modelStore.vehicleModels.length}
             onChangePage={this.props.handleChangePage}
             onChangeRowsPerPage={this.props.handleChangeRowsPerPage}
           />

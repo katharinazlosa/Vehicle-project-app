@@ -1,29 +1,28 @@
-class VehicleMakeUI extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    editMake = "";
-    editAbbreviation = "";
-    editMode: false;
-    };
-  }
-  useEffect(() => {
-    setEditMake(make.name);
-  }, [make.name]);
+import { action, makeObservable, observable } from "mobx";
+import Make from "../stores/store/vehicleMake/make";
 
-  useEffect(() => {
-    setEditAbbreviation(make.abbreviation);
-  }, [make.abbreviation]);
+export class VehicleMakeUI {
+  make = Make;
+  editMake = "";
+  editAbbreviation = "";
+  editMode = false;
+
+  constructor(make: Make) {
+    makeObservable(this, {
+      make: observable,
+      editMake: observable,
+      editAbbreviation: observable,
+      editMode: observable,
+      setEditMake: action,
+      setEditAbbreviation: action,
+    });
+  }
 
   componentDidMount() {
-    document.title = `Younkdgh`;
+    this.setEditMake(this.make.name);
   }
 
   componentDidMount() {
-    document.title = `Younkdgh`;
-  }
-
-  render() {
-    return <div></div>;
+    this.setEditAbbreviation(this.make.abbreviation);
   }
 }

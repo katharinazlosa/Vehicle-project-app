@@ -1,84 +1,70 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import VehicleModel from "../stores/store/vehicleModel/model";
+import { VehicleModelUI } from "../logic/VehicleModelUI";
 import { TableRow, TableCell, Button } from "@material-ui/core";
 
-interface Props {
-  model: VehicleModel;
+class VehicleModelComp extends React.Component {
+  render() {
+    return (
+      <React.Fragment>
+        {this.props.editMode ? (
+          <TableRow>
+            <TableCell>{this.props.model.id}</TableCell>
+            <TableCell align="right">
+              <input
+                type="text"
+                value={this.props.makeId}
+                onChange={(e) => this.props.setMakeId(e.target.value)}
+              />
+            </TableCell>
+            <TableCell align="right">
+              <input
+                type="text"
+                value={this.props.modelName}
+                onChange={(e) => this.props.setModelName(e.target.value)}
+              />
+            </TableCell>
+            <TableCell align="right">
+              <input
+                type="text"
+                value={this.props.modelAbbrv}
+                onChange={(e) => this.props.setModelAbbrv(e.target.value)}
+              />
+            </TableCell>
+            <TableCell align="right">
+              <Button
+                onClick={() => {
+                  this.props.setEditMode(false);
+                  this.props.model.editModelFields(
+                    this.props.makeId,
+                    this.props.modelName,
+                    this.props.modelAbbrv
+                  );
+                }}
+                variant="outlined"
+              >
+                Save
+              </Button>
+            </TableCell>
+          </TableRow>
+        ) : (
+          <TableRow>
+            <TableCell>{this.props.model.id}</TableCell>
+            <TableCell align="right">{this.props.model.makeId}</TableCell>
+            <TableCell align="right">{this.props.model.modelName}</TableCell>
+            <TableCell align="right">{this.props.model.modelAbbrv}</TableCell>
+            <TableCell align="right">
+              <i
+                className="fa fa-pencil-square-o addHoverHand"
+                aria-hidden="true"
+                onClick={() => this.props.setEditMode(true)}
+              ></i>
+            </TableCell>
+          </TableRow>
+        )}
+      </React.Fragment>
+    );
+  }
 }
-
-const VehicleModelComp: FunctionComponent<Props> = ({ model }) => {
-  useEffect(() => {
-    setMakeId(model.makeId);
-  }, [model.makeId]);
-
-  useEffect(() => {
-    setModelName(model.modelName);
-  }, [model.modelName]);
-
-  useEffect(() => {
-    setModelAbbrv(model.modelAbbrv);
-  }, [model.modelAbbrv]);
-
-  const [makeId, setMakeId] = useState("");
-  const [modelName, setModelName] = useState("");
-  const [modelAbbrv, setModelAbbrv] = useState("");
-  const [editMode, setEditMode] = useState(false);
-
-  return (
-    <React.Fragment>
-      {editMode ? (
-        <TableRow>
-          <TableCell>{model.id}</TableCell>
-          <TableCell align="right">
-            <input
-              type="text"
-              value={makeId}
-              onChange={(e) => setMakeId(e.target.value)}
-            />
-          </TableCell>
-          <TableCell align="right">
-            <input
-              type="text"
-              value={modelName}
-              onChange={(e) => setModelName(e.target.value)}
-            />
-          </TableCell>
-          <TableCell align="right">
-            <input
-              type="text"
-              value={modelAbbrv}
-              onChange={(e) => setModelAbbrv(e.target.value)}
-            />
-          </TableCell>
-          <TableCell align="right">
-            <Button
-              onClick={() => {
-                setEditMode(false);
-                model.editModelFields(makeId, modelName, modelAbbrv);
-              }}
-              variant="outlined"
-            >
-              Save
-            </Button>
-          </TableCell>
-        </TableRow>
-      ) : (
-        <TableRow>
-          <TableCell>{model.id}</TableCell>
-          <TableCell align="right">{model.makeId}</TableCell>
-          <TableCell align="right">{model.modelName}</TableCell>
-          <TableCell align="right">{model.modelAbbrv}</TableCell>
-          <TableCell align="right">
-            <i
-              className="fa fa-pencil-square-o addHoverHand"
-              aria-hidden="true"
-              onClick={() => setEditMode(true)}
-            ></i>
-          </TableCell>
-        </TableRow>
-      )}
-    </React.Fragment>
-  );
-};
 
 export default VehicleModelComp;
