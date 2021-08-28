@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import VehicleMake from "./VehicleMake";
+import DataStore from "../stores/store/dataStore";
 import Make from "../stores/store/vehicleMake/make";
 import classes from "./VehicleMakeListClasses.css";
-import { VehicleMakeListUIStore } from "../logic/VehicleMakeListUIStore";
+import VehicleMakeListUIStore from "../logic/VehicleMakeListUIStore";
 
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -61,7 +62,7 @@ class VehicleMakeList extends React.Component {
                   </InputAdornment>
                 ),
               }}
-              onChange={this.props.handleSearch}
+              onChange={this.handleSearch}
             />
           </Toolbar>
           <TableContainer>
@@ -91,9 +92,7 @@ class VehicleMakeList extends React.Component {
                               ? this.props.order
                               : "asc"
                           }
-                          onClick={() =>
-                            this.props.handleSortRequest(element.id)
-                          }
+                          onClick={() => this.handleSortRequest(element.id)}
                         >
                           {element.label}
                         </TableSortLabel>
@@ -103,9 +102,10 @@ class VehicleMakeList extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.props.makesAfterPagingAndSorting().map((make: Make) => (
-                  <VehicleMake make={make} key={make.id} />
-                ))}
+                {this.makesAfterPagingAndSorting &&
+                  this.makesAfterPagingAndSorting.map((make: Make) => (
+                    <VehicleMake make={make} key={make.id} />
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -114,7 +114,7 @@ class VehicleMakeList extends React.Component {
             page={this.props.page}
             component="div"
             rowsPerPage={this.props.rowsPerPage}
-            count={this.props.dataStore.makeStore.allMakes.length}
+            count={this.dataStore && this.dataStore.makeStore.allMakes.length}
             onChangePage={this.props.handleChangePage}
             onChangeRowsPerPage={this.props.handleChangeRowsPerPage}
           />
@@ -123,4 +123,4 @@ class VehicleMakeList extends React.Component {
     );
   }
 }
-export default { VehicleMakeList };
+export default VehicleMakeList;

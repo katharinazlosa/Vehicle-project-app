@@ -13,6 +13,16 @@ export class VehicleMakeListUIStore {
     return items;
   };
   constructor() {
+    this.handleChangePage = this.handleChangePage.bind(this);
+    this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
+    this.stableSort = this.stableSort.bind(this);
+    this.getComparator = this.getComparator.bind(this);
+    this.descendingComparator = this.descendingComparator.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.makesAfterPagingAndSorting =
+      this.makesAfterPagingAndSorting.bind(this);
+    this.handleSortRequest = this.handleSortRequest.bind(this);
+
     makeObservable(this, {
       page: observable,
       pages: observable,

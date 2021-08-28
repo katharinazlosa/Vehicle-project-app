@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 
-import VehicleMakeUI from "../logic/VehicleMakeUI";
+import { VehicleMakeUI } from "../logic/VehicleMakeUI";
 import "./VehicleMake.css";
 import { TableRow, TableCell, Button } from "@material-ui/core";
 

@@ -4,7 +4,7 @@ import VehicleModel from "../stores/store/vehicleModel/model";
 import React from "react";
 import { makeObservable, observable, action, computed } from "mobx";
 
-class VehicleModelListUIStore {
+export class VehicleModelListUIStore {
   page: 0;
   pages: [5, 10, 25];
   rowsPerPage: pages[page];

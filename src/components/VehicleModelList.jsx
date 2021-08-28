@@ -64,7 +64,7 @@ class VehicleModelList extends React.Component {
                   </InputAdornment>
                 ),
               }}
-              onChange={this.props.handleSearch}
+              onChange={this.handleSearch}
             />
           </Toolbar>
           <TableContainer>
@@ -94,9 +94,7 @@ class VehicleModelList extends React.Component {
                               ? this.props.order
                               : "asc"
                           }
-                          onClick={() =>
-                            this.props.handleSortRequest(element.id)
-                          }
+                          onClick={() => this.handleSortRequest(element.id)}
                         >
                           {element.label}
                         </TableSortLabel>
@@ -106,14 +104,15 @@ class VehicleModelList extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.props
-                  .makesAfterPagingAndSorting()
-                  .map((vehicleModel: VehicleModel) => (
-                    <VehicleModelComp
-                      model={vehicleModel}
-                      key={vehicleModel.id}
-                    />
-                  ))}
+                {this.makesAfterPagingAndSorting &&
+                  this.makesAfterPagingAndSorting().map(
+                    (vehicleModel: VehicleModel) => (
+                      <VehicleModelComp
+                        model={vehicleModel}
+                        key={vehicleModel.id}
+                      />
+                    )
+                  )}
               </TableBody>
             </Table>
           </TableContainer>
@@ -122,7 +121,9 @@ class VehicleModelList extends React.Component {
             page={this.props.page}
             component="div"
             rowsPerPage={this.props.rowsPerPage}
-            count={this.props.dataStore.modelStore.vehicleModels.length}
+            count={
+              this.dataStore && this.dataStore.modelStore.vehicleModels.length
+            }
             onChangePage={this.props.handleChangePage}
             onChangeRowsPerPage={this.props.handleChangeRowsPerPage}
           />
