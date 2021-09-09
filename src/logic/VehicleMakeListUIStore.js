@@ -9,9 +9,11 @@ export class VehicleMakeListUIStore {
   rowsPerPage: pages[page];
   order: "";
   orderBy: "";
-  filterFn: fn = (items: Make[]) => {
-    return items;
-  };
+  // filterFn: "";
+  //  fn = (items: Make[]) => {
+  //   return items;
+  // };
+  cellId: [];
   constructor() {
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
@@ -52,31 +54,31 @@ export class VehicleMakeListUIStore {
     const stabilizedThis = array.map((el: any, index: any) => [el, index]);
     stabilizedThis.sort((a: any, b: any) => {
       const order = comparator(a[0], b[0]);
-      if (this.order !== 0) return this.order;
+      if (order !== 0) return order;
       return a[1] - b[1];
     });
     return stabilizedThis.map((el: [Make, number]) => el[0]);
   }
 
-  getComparator(order: string, orderBy: string) {
-    return this.order === "desc"
-      ? (a: any, b: any) => this.descendingComparator(a, b, orderBy)
-      : (a: any, b: any) => -this.descendingComparator(a, b, orderBy);
-  }
-
   descendingComparator(a: any, b: any, orderBy: string) {
-    if (b[this.orderBy] < a[this.orderBy]) {
+    if (b[orderBy] < a[orderBy]) {
       return -1;
     }
-    if (b[this.orderBy] > a[this.orderBy]) {
+    if (b[orderBy] > a[orderBy]) {
       return 1;
     }
     return 0;
   }
 
+  getComparator(order: string, orderBy: string) {
+    return order === "desc"
+      ? (a: any, b: any) => this.descendingComparator(a, b, orderBy)
+      : (a: any, b: any) => -this.descendingComparator(a, b, orderBy);
+  }
+
   handleSearch(e: { target: any }) {
     let target = e.target;
-    this.setFilterFn({
+    this.filterFn({
       fn: (items: Make[]) => {
         if (target.value === "") return items;
         else
@@ -89,14 +91,14 @@ export class VehicleMakeListUIStore {
 
   makesAfterPagingAndSorting() {
     return this.stableSort(
-      this.filterFn.fn(this.props.dataStore.makeStore.allMakes),
+      this.filterFn.fn(this.dataStore.makeStore.allMakes),
       this.getComparator(this.order, this.orderBy)
     ).slice(this.page * this.rowsPerPage, (this.page + 1) * this.rowsPerPage);
   }
 
   handleSortRequest(cellId: string) {
-    const isAsc = this.orderBy === cellId && this.order === "asc";
-    this.setState(isAsc ? "desc" : "asc");
-    this.setState(cellId);
+    const isAsc = this.orderBy === this.cellId && this.order === "asc";
+    this.order(isAsc ? "desc" : "asc");
+    this.orderBy(cellId);
   }
 }

@@ -75,9 +75,7 @@ class VehicleMakeList extends React.Component {
                       className={classesMUI.head}
                       // @ts-ignore
                       sortDirection={
-                        this.props.orderBy === element.id
-                          ? this.props.order
-                          : false
+                        this.orderBy === element.id ? this.order : false
                       }
                       align={element.id === "id" ? "left" : "right"}
                     >
@@ -85,12 +83,10 @@ class VehicleMakeList extends React.Component {
                         element.label
                       ) : (
                         <TableSortLabel
-                          active={this.props.orderBy === element.id}
+                          active={this.orderBy === element.id}
                           // @ts-ignore
                           direction={
-                            this.props.orderBy === element.id
-                              ? this.props.order
-                              : "asc"
+                            this.orderBy === element.id ? this.order : "asc"
                           }
                           onClick={() => this.handleSortRequest(element.id)}
                         >
@@ -110,13 +106,13 @@ class VehicleMakeList extends React.Component {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={this.props.pages}
-            page={this.props.page}
+            rowsPerPageOptions={this.pages}
+            page={this.page}
             component="div"
-            rowsPerPage={this.props.rowsPerPage}
+            rowsPerPage={this.rowsPerPage}
             count={this.dataStore && this.dataStore.makeStore.allMakes.length}
-            onChangePage={this.props.handleChangePage}
-            onChangeRowsPerPage={this.props.handleChangeRowsPerPage}
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
           />
         </Paper>
       </div>

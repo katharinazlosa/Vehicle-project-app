@@ -19,10 +19,10 @@ export class VehicleMakeUI {
   }
 
   componentDidMount() {
-    this.setEditMake(this.make.name);
+    this.editMake(this.make.name);
   }
 
   componentDidMount() {
-    this.setEditAbbreviation(this.make.abbreviation);
+    this.editAbbreviation(this.make.abbreviation);
   }
 }

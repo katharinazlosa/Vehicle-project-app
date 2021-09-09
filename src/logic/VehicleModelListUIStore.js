@@ -77,11 +77,11 @@ export class VehicleModelListUIStore {
     return this.stableSort(
       this.filterFn.fn(this.props.dataStore.modelStore.vehicleModels),
       this.getComparator(this.props.order, this.props.orderBy)
-    ).slice(page * this.props.rowsPerPage, (page + 1) * this.props.rowsPerPage);
+    ).slice(this.page * this.rowsPerPage, (page + 1) * this.rowsPerPage);
   }
   handleSortRequest(cellId: string) {
     const isAsc = this.props.orderBy === cellId && this.props.order === "asc";
-    this.props.setOrder(isAsc ? "desc" : "asc");
+    this.setOrder(isAsc ? "desc" : "asc");
     this.props.setOrderBy(cellId);
   }
 }

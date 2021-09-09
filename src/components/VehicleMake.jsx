@@ -15,31 +15,28 @@ class VehicleMake extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {this.props.editMode ? (
+        {this.editMode ? (
           <TableRow>
-            <TableCell>{this.props.make.id}</TableCell>
+            <TableCell>{this.make.id}</TableCell>
             <TableCell align="right">
               <input
                 type="text"
-                value={this.props.editMake}
-                onChange={(e) => this.props.setEditMake(e.target.value)}
+                value={this.editMake}
+                onChange={(e) => this.setEditMake(e.target.value)}
               />
             </TableCell>
             <TableCell align="right">
               <input
                 type="text"
-                value={this.props.editAbbreviation}
-                onChange={(e) => this.props.setEditAbbreviation(e.target.value)}
+                value={this.editAbbreviation}
+                onChange={(e) => this.setEditAbbreviation(e.target.value)}
               />
             </TableCell>
             <TableCell align="right">
               <Button
                 onClick={() => {
-                  this.props.setEditMode(false);
-                  this.props.make.editFields(
-                    this.props.editMake,
-                    this.props.editAbbreviation
-                  );
+                  this.setEditMode(false);
+                  this.make.editFields(this.editMake, this.editAbbreviation);
                 }}
                 variant="outlined"
               >
@@ -49,14 +46,14 @@ class VehicleMake extends React.Component {
           </TableRow>
         ) : (
           <TableRow>
-            <TableCell>{this.props.make.id}</TableCell>
-            <TableCell align="right">{this.props.make.name}</TableCell>
-            <TableCell align="right">{this.props.make.abbreviation}</TableCell>
+            <TableCell>{this.make.id}</TableCell>
+            <TableCell align="right">{this.make.name}</TableCell>
+            <TableCell align="right">{this.make.abbreviation}</TableCell>
             <TableCell align="right">
               <i
                 className="fa fa-pencil-square-o addHoverHand"
                 aria-hidden="true"
-                onClick={() => this.props.setEditMode(true)}
+                onClick={() => this.setEditMode(true)}
               ></i>
             </TableCell>
           </TableRow>
